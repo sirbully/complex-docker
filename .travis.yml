@@ -1,0 +1,26 @@
+language: generic
+services:
+  # App depends on docker
+  - docker
+
+before_install:
+  # Build test image
+  - docker build -t knbully/complex-docker-react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  # Run test script on test image
+  - docker run -e CI=true knbully/complex-docker-react-test npm run test
+
+after_success:
+  # Build prod images
+  - docker build -t knbully/complex-client ./client
+  - docker build -t knbully/complex-nginx ./nginx
+  - docker build -t knbully/complex-server ./server
+  - docker build -t knbully/complex-worker ./worker
+  # Login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take images and push to docker hub
+  - docker push knbully/complex-client
+  - docker push knbully/complex-nginx
+  - docker push knbully/complex-server
+  - docker push knbully/complex-worker
