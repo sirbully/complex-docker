@@ -26,7 +26,6 @@ after_success:
   - docker push knbully/complex-worker
 
 deploy:
-  edge: true
   provider: elasticbeanstalk
   region: eu-west-2
   app: docker-complex
