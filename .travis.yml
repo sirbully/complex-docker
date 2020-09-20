@@ -24,3 +24,15 @@ after_success:
   - docker push knbully/complex-nginx
   - docker push knbully/complex-server
   - docker push knbully/complex-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-2
+  app: docker-complex
+  environment: DockerComplex-env
+  bucket_name: elasticbeanstalk-eu-west-2-053515776978
+  bucket_path: docker-complex
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
