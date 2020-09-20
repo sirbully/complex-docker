@@ -11,6 +11,7 @@ const App = () => {
     <Router>
       <div className="App">
         <header>
+          <h1>Fibonacci Calculator</h1>
           <Link to="/">Home</Link>
           <Link to="/other">Other Page</Link>
         </header>
